@@ -724,10 +724,10 @@ CREATE EXTERNAL TABLE dws_user_user_login_td
     TBLPROPERTIES ('orc.compress' = 'snappy');
 
 insert overwrite table dws_user_user_login_td partition (dt = '20250916')
-select u.id                                                         user_id,
-       nvl(login_date_last, date_format(create_time, 'yyyy-MM-dd')) login_date_last,
-       date_format(create_time, 'yyyy-MM-dd')                       login_date_first,
-       nvl(login_count_td, 1)                                       login_count_td
+select u.id                                     as                    user_id,
+       nvl(login_date_last, date_format(create_time, 'yyyy-MM-dd')) as login_date_last,
+       date_format(create_time, 'yyyy-MM-dd')                      as login_date_first,
+       nvl(login_count_td, 1)                                     as  login_count_td
 from (
          select id,
                 create_time

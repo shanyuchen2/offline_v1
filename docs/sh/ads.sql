@@ -18,7 +18,7 @@ insert overwrite table ads_traffic_stats_by_channel
 select * from ads_traffic_stats_by_channel
 union
 select
-    '20250916' dt,
+    '20250916' ,dt,
     recent_days,
     channel,
     cast(count(distinct(mid_id)) as bigint) uv_count,
