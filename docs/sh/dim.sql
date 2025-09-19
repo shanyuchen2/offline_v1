@@ -476,21 +476,3 @@ select * from dim_date;
 
 select * from tmp_dim_date_info;
 
-insert overwrite table dim_user_zip partition (dt = '9999-12-31')
-select data.id,
-       concat(substr(data.name, 1, 1), '*')                name,
-       if(data.phone_num regexp '^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$',
-          concat(substr(data.phone_num, 1, 3), '*'), null) phone_num,
-       if(data.email regexp '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$',
-          concat('*@', split(data.email, '@')[1]), null)   email,
-       data.user_level,
-       data.birthday,
-       data.gender,
-       data.create_time,
-       data.operate_time,
-       '20250916'                                        start_date,
-       '9999-12-31'                                        end_date
-from ods_user_info_inc
-where dt = '20250916'
-  and type = 'bootstrap-insert';
-
